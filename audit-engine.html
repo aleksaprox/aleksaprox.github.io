@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moteur d'audit Google Ads - Aleksa | Marketing Engineer</title>
+  <meta name="description" content="Un système d'environ 45 modules d'analyse orchestrés à contexte partagé, qui mène un audit de compte Google Ads complet de la collecte de données jusqu'au plan d'action chiffré en euros." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark">A</span>
+        <span>Aleksa<small>Marketing Engineer</small></span>
+      </a>
+      <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <nav class="nav__links">
+        <a href="index.html#production">Systèmes</a>
+        <a href="index.html#vision">Vision &amp; R&amp;D</a>
+        <a href="index.html#approche">Approche</a>
+        <a href="index.html#stack">Stack</a>
+        <a class="nav__cta" href="index.html#contact">Échanger</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section class="phead">
+    <div class="wrap">
+      <a class="back" href="index.html#production">← Tous les systèmes</a>
+      <span class="badge badge--prod">En production</span>
+      <h1 style="margin-top:18px">Moteur d'audit Google Ads</h1>
+      <p class="lead">Un système d'environ <strong>45 modules d'analyse</strong> orchestrés à contexte partagé, qui mène un audit de compte complet de la collecte de données jusqu'au plan d'action chiffré en euros. Il rend reproductible, sur n'importe quel compte, un audit de niveau senior.</p>
+      <div class="phead__meta">
+        <span class="pill"><span class="dot"></span> ~45 modules à contexte partagé</span>
+        <span class="pill"><span class="dot"></span> Porte de matérialité GAQL</span>
+        <span class="pill"><span class="dot"></span> Headline en euros, pas une note</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE PROBLEME -->
+  <section class="section">
+    <div class="wrap split split--wide">
+      <div class="reveal">
+        <span class="eyebrow">Le problème</span>
+        <h2>Un audit senior complet, c'est plusieurs jours de travail variable</h2>
+        <p class="lead">
+          Auditer un compte Google Ads sérieusement n'a rien d'un coup d'oeil. C'est un enchaînement de
+          tâches lourdes : collecte <strong>GAQL</strong>, détection des leviers réellement actifs,
+          classification des gaspillages, rédaction, scoring, assemblage final.
+        </p>
+        <p>
+          Plusieurs journées de travail, dont l'issue varie d'un consultant à l'autre selon son expérience,
+          sa méthode et le temps qu'il y consacre. Un travail dense, difficile à rendre homogène, et plus
+          difficile encore à <strong>scaler</strong> sur un portefeuille entier.
+        </p>
+      </div>
+      <div class="reveal">
+        <ul class="ticks">
+          <li>La <strong>collecte GAQL</strong> et la mise en cohérence des données prennent un temps disproportionné.</li>
+          <li>La <strong>détection des leviers</strong> et la classification des gaspillages dépendent du consultant.</li>
+          <li>Le <strong>scoring</strong> et l'assemblage du rapport sont chronophages et peu reproductibles.</li>
+          <li>D'un auditeur à l'autre, le <strong>livrable n'est jamais le même</strong> - la qualité n'est pas garantie.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'ARCHITECTURE EN COUCHES (dark) -->
+  <section class="dark section">
+    <div class="wrap">
+      <div class="reveal" style="max-width:62ch">
+        <span class="eyebrow">L'architecture</span>
+        <h2>Une architecture en couches</h2>
+        <p class="lead">Deux modules de pilotage encadrent un parc d'analyseurs spécialisés. L'orchestrateur décide quoi déclencher, les analyseurs produisent les constats, le compilateur assemble le tout en un rapport unifié. Chaque couche a un rôle strict.</p>
+      </div>
+
+      <div class="thread reveal" style="margin-top:44px;grid-template-columns:repeat(2,1fr)">
+        <div class="thread__step">
+          <div class="thread__num">Couche 0 · Pilotage</div>
+          <h3>1 orchestrateur - pilote en trois temps</h3>
+          <p>Il déroule <strong>Contexte</strong>, puis <strong>Scan</strong> avec une <strong>porte de matérialité</strong> qui n'active en aval que les leviers réellement actifs et matériels, détectés par des signaux <strong>GAQL déterministes</strong>, puis <strong>Plan d'action</strong>. Doctrine ROIste explicite : le gaspillage avant la croissance, la rentabilité avant les métriques de vanité, tracking d'abord.</p>
+        </div>
+        <div class="thread__step">
+          <div class="thread__num">Couche 0 · Assemblage</div>
+          <h3>1 compilateur de rapport - phase finale</h3>
+          <p>Il lit tout le <strong>contexte partagé</strong> sans aucun appel API, produit le rapport unifié et applique un <strong>scoring pondéré sur 6 catégories</strong> (fondations, campagnes, transversal, rentabilité, créatif, externe). Le score est volontairement rétrogradé en annexe : la headline reste l'<strong>impact en euros</strong> et la priorité d'action, jamais la note.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap reveal" style="margin-top:32px">
+        <table>
+          <thead>
+            <tr>
+              <th>Couche</th>
+              <th>Modules</th>
+              <th>Périmètre</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Audits par type de campagne</strong></td>
+              <td><strong>7</strong></td>
+              <td>Search, PMax, Shopping standard, Shopping feed, Demand Gen, Display, Video - chacun avec ses signaux et ses seuils propres.</td>
+            </tr>
+            <tr>
+              <td><strong>Audits transversaux</strong></td>
+              <td><strong>9</strong></td>
+              <td>Tracking de conversion, structure de compte, réglages, budget/enchères, audiences, marge/POAS, cannibalisation cross-canal, attribution, chaîne d'alignement.</td>
+            </tr>
+            <tr>
+              <td><strong>Modules opérationnels action-first</strong></td>
+              <td><strong>~15</strong></td>
+              <td>Analyse RSA, générateur de titres RSA, analyseur de négatifs, diagnostics ciblés (Quality Score, cannibalisation, dégradation de perf), optimiseur de réallocation budgétaire, fix-lists réglages et tracking, builder de campagne.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE VRAI DIFFERENCIATEUR -->
+  <section class="section">
+    <div class="wrap split">
+      <div class="reveal">
+        <span class="eyebrow">Le vrai différenciateur</span>
+        <h2>Le contexte partagé</h2>
+        <p class="lead">
+          Ce qui distingue ce système d'une collection de scripts isolés, c'est sa mémoire commune. Chaque
+          module écrit dans son propre <strong>namespace</strong> et lit les sorties des modules amont.
+        </p>
+        <p>
+          Conséquence directe : les modules tardifs <strong>ne re-requêtent pas l'API</strong>. Ils
+          consomment la donnée déjà collectée plus tôt dans la chaîne. La chaîne devient
+          <strong>parallélisable</strong> et économe en appels - la donnée est tirée une fois, exploitée
+          partout. Chaque module fonctionne en <strong>dual-mode</strong> : standalone pour un diagnostic
+          ciblé, ou orchestré dans l'audit complet.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="callout">
+          <span class="callout__icon">❖</span>
+          <div>
+            <h4>Doctrine de résilience</h4>
+            <p>Si un module échoue, l'orchestrateur continue selon un repli documenté. Un audit n'est jamais bloqué par une couche défaillante - il se poursuit avec le périmètre disponible, signalé comme tel.</p>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:18px">
+          <span class="callout__icon">⛨</span>
+          <div>
+            <h4>Discipline data</h4>
+            <p>Tout passe par une <strong>requête GAQL en lecture seule</strong>. Un constat établi sous le seuil de volume est marqué <strong>« directionnel »</strong> : la donnée trop maigre est honnêtement étiquetée, jamais présentée comme une certitude.</p>
+          </div>
+        </div>
+        <ul class="ticks" style="margin-top:24px">
+          <li>Écriture en <strong>namespace</strong> dédié, lecture des sorties amont.</li>
+          <li>Pas de <strong>re-requête API</strong> en aval - donnée tirée une fois.</li>
+          <li>Chaîne <strong>parallélisable</strong> et économe en appels.</li>
+          <li><strong>Dual-mode</strong> standalone / orchestré sur chaque module.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DU CONSTAT A L'ACTION -->
+  <section class="section" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="reveal" style="max-width:62ch">
+        <span class="eyebrow">Du constat à l'action</span>
+        <h2>Des artefacts directement applicables, jamais appliqués seuls</h2>
+        <p class="lead">
+          Un audit qui s'arrête au diagnostic laisse tout le travail d'exécution sur la table. Les modules
+          action-first produisent des livrables prêts à l'emploi, et non de simples observations.
+        </p>
+      </div>
+      <div class="grid grid--2 reveal" style="margin-top:36px">
+        <div class="card">
+          <span class="badge badge--prod" style="margin-bottom:14px">Ce qui sort</span>
+          <ul class="ticks">
+            <li>Listes de <strong>négatifs prêts à l'import</strong>.</li>
+            <li><strong>Titres RSA</strong> générés et calibrés.</li>
+            <li>Listes de <strong>bascules de réglages</strong> à appliquer.</li>
+            <li><strong>Mutations budgétaires</strong> avec garde-fous chiffrés.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="badge badge--proto" style="margin-bottom:14px">La règle stricte</span>
+          <ul class="ticks">
+            <li><strong>Jamais d'application automatique</strong> sur le compte.</li>
+            <li>L'<strong>humain valide chaque mutation</strong> avant exécution.</li>
+            <li>Le système prépare ; le consultant <strong>arbitre et déclenche</strong>.</li>
+            <li>Aucune action ne contourne ce point de contrôle.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUT -->
+  <section class="section">
+    <div class="wrap split">
+      <div class="reveal">
+        <span class="eyebrow">Statut</span>
+        <h2>En production, avec une partie encore en refonte</h2>
+        <p class="lead">
+          Le moteur est utilisé en production. Les versions matures sont stables et les requêtes
+          <strong>GAQL</strong> ont été testées sur des comptes réels.
+        </p>
+        <p>
+          Quelques paliers de l'orchestrateur sont encore en refonte, dans une démarche
+          <strong>« Audit-to-Action »</strong> : faire que chaque constat débouche systématiquement sur un
+          artefact opérationnel, et que la progression suive des paliers d'action plutôt qu'un simple score.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="callout">
+          <span class="callout__icon">◉</span>
+          <div>
+            <h4>Le score n'est jamais la headline</h4>
+            <p>Le scoring pondéré sur 6 catégories existe, mais il est délibérément renvoyé en annexe. Ce qui ouvre le rapport, c'est l'impact en euros et la priorité d'action - la note ne sert qu'à situer, pas à conclure.</p>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:18px">
+          <span class="callout__icon">◫</span>
+          <div>
+            <h4>Même socle, n'importe quel compte</h4>
+            <p>Le travail variable d'un expert devient un livrable déterministe et homogène. La porte de matérialité adapte automatiquement le périmètre au compte : montée en charge sans re-paramétrage manuel.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CE QUE CA CHANGE -->
+  <section class="dark section">
+    <div class="wrap split split--wide">
+      <div class="reveal">
+        <span class="eyebrow">Ce que ça change</span>
+        <p class="quote">D'un audit <span class="grad">variable</span> selon l'auditeur à un livrable <span class="grad">déterministe</span> sur n'importe quel compte.</p>
+      </div>
+      <div class="reveal">
+        <p class="lead">
+          Au-delà du temps gagné, c'est la nature du livrable qui change. Le travail
+          dense et variable d'un expert devient un audit <strong>reproductible et homogène</strong>, mené
+          de la collecte de données jusqu'au plan d'action chiffré en euros, avec un parti pris ROIste
+          assumé du début à la fin.
+        </p>
+        <p class="lead">
+          Et parce que le même socle s'applique à <strong>n'importe quel compte sans re-paramétrage</strong>,
+          un audit de niveau senior cesse d'être un goulot : il devient une capacité qu'on peut faire
+          monter en charge à l'échelle d'un portefeuille.
+        </p>
+        <div class="btn-row" style="margin-top:26px">
+          <a class="btn btn--light" href="reporting-loop.html">La boucle de reporting <span class="arrow">→</span></a>
+          <a class="btn btn--light" href="sea-platform.html">Le dashboard sea-platform <span class="arrow">→</span></a>
+          <a class="btn btn--light" href="index.html#production">Tous les systèmes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="index.html" style="color:var(--d-ink);margin-bottom:16px">
+            <span class="brand__mark">A</span>
+            <span>Aleksa<small style="color:var(--d-muted)">Marketing Engineer</small></span>
+          </a>
+          <p>Team Leader Paid Media &amp; Expert Tracking. Je construis les systèmes IA qui font scaler une agence paid sans sacrifier la fiabilité de la donnée.</p>
+        </div>
+        <div>
+          <h4>Systèmes</h4>
+          <a href="reporting-loop.html">Reporting Loop</a>
+          <a href="sea-platform.html">sea-platform</a>
+          <a href="audit-engine.html">Moteur d'audit</a>
+          <a href="mcp-servers.html">Serveurs MCP</a>
+          <a href="comms-assistant.html">Assistant communication</a>
+        </div>
+        <div>
+          <h4>Aller plus loin</h4>
+          <a href="vision-rd.html">Vision &amp; R&amp;D</a>
+          <a href="index.html#approche">Approche &amp; garde-fous</a>
+          <a href="index.html#stack">Stack technique</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Aleksa - Marketing Engineer</span>
+        <span>Données clients anonymisées · Portfolio professionnel</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

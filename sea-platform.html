@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sea-platform - Aleksa | Marketing Engineer</title>
+  <meta name="description" content="Application web qui connecte les comptes Google Ads en direct et génère, section par section, des recommandations d'expert SEA actionnables. Moteur hybride signaux déterministes + LLM." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark">A</span>
+        <span>Aleksa<small>Marketing Engineer</small></span>
+      </a>
+      <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <nav class="nav__links">
+        <a href="index.html#production">Systèmes</a>
+        <a href="index.html#vision">Vision &amp; R&amp;D</a>
+        <a href="index.html#approche">Approche</a>
+        <a href="index.html#stack">Stack</a>
+        <a class="nav__cta" href="index.html#contact">Échanger</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section class="phead">
+    <div class="wrap">
+      <a class="back" href="index.html#production">← Tous les systèmes</a>
+      <span class="badge badge--prod">En production - usage interne</span>
+      <h1 style="margin-top:18px">sea-platform</h1>
+      <p class="lead">Application web qui connecte les comptes Google Ads en direct - <strong>multi-MCC</strong>, découverte automatique des comptes - et génère, section par section, des recommandations d'expert SEA directement actionnables. Double nature : un outil d'analyse pour le consultant <strong>et</strong> un livrable visuel présentable au client.</p>
+      <div class="phead__meta">
+        <span class="pill"><span class="dot"></span> Moteur hybride : signaux + LLM</span>
+        <span class="pill"><span class="dot"></span> Grounding strict, anti-hallucination</span>
+        <span class="pill"><span class="dot"></span> Repli déterministe systématique</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE PROBLEME -->
+  <section class="section">
+    <div class="wrap split split--wide">
+      <div class="reveal">
+        <span class="eyebrow">Le problème</span>
+        <h2>L'audit manuel ne scale pas, et ne se reproduit pas</h2>
+        <p class="lead">
+          Auditer un compte Google Ads à la main est lent, répétitif et difficilement reproductible.
+          La donnée brute est là, mais entre l'extraction, la mise en forme et la rédaction des
+          recommandations, il s'écoule des heures - et le résultat dépend de qui tient le clavier.
+        </p>
+      </div>
+      <div class="reveal">
+        <ul class="ticks">
+          <li>Il faut un <strong>dashboard live</strong>, branché sur l'API, pas un export figé qui périme à l'instant où on le génère.</li>
+          <li>Il faut un livrable <strong>présentable au client</strong>, pas une feuille de calcul d'analyste.</li>
+          <li>Il faut transformer la donnée brute en <strong>recommandations priorisées</strong>, sans ressaisie ni copier-coller.</li>
+          <li>Et il faut que deux audits du même compte donnent <strong>la même analyse</strong> - la reproductibilité avant tout.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'ARCHITECTURE (dark) -->
+  <section class="dark section">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <span class="eyebrow">L'architecture</span>
+        <h2>Un moteur hybride à deux couches</h2>
+        <p class="lead">Le cœur de <strong>sea-platform</strong> sépare ce qui doit être factuel de ce qui doit être rédigé. Une couche calcule des faits ; une autre les met en récit. La première garantit la fiabilité, la seconde la profondeur d'analyse - sans jamais que l'une contredise l'autre.</p>
+      </div>
+
+      <div class="thread reveal" style="margin-top:44px;grid-template-columns:repeat(2,1fr)">
+        <div class="thread__step">
+          <div class="thread__num">01 · Signals</div>
+          <h3>Couche signaux déterministes</h3>
+          <p>Un module par section exécute le <strong>GAQL prouvé</strong>, calcule indicateurs et seuils, puis produit des objets <strong>Signal</strong> typés : code, sévérité, faits chiffrés, preuve. Aucune part d'interprétation à ce stade. <strong>Coût zéro</strong>, fiabilité strictement factuelle.</p>
+        </div>
+        <div class="thread__step">
+          <div class="thread__num">02 · Reco</div>
+          <h3>Couche recommandation</h3>
+          <p>Un rendu déterministe par <strong>templates</strong> affiche les recommandations <strong>instantanément</strong>. En parallèle, un moteur LLM (<strong>claude -p</strong>, modèle rapide par défaut, modèle profond en mode <strong>deep</strong>) rédige des recos d'expert contextualisées, sous un <strong>schéma JSON imposé</strong>.</p>
+        </div>
+      </div>
+
+      <div class="callout reveal" style="margin-top:18px">
+        <span class="callout__icon">⛨</span>
+        <div>
+          <h4>Grounding strict</h4>
+          <p>Chaque chiffre rédigé par le LLM doit provenir des <strong>faits portés par les signaux</strong> - rien d'inventé. Les identifiants qui n'existent pas dans les données sont <strong>rejetés à la validation</strong>. Le modèle rédige le récit ; il ne fabrique jamais la donnée.</p>
+        </div>
+      </div>
+
+      <div class="code reveal" style="margin-top:30px">
+        <div class="code__bar"><i></i><i></i><i></i><span>flux d'une section</span></div>
+        <pre><span class="c-com"># 1. couche signaux - GAQL prouvé, faits typés, coût zéro</span>
+signals = <span class="c-fn">run_section</span>(<span class="c-str">"search_terms"</span>, account, period)
+<span class="c-com"># -> Signal(code="WASTE_BROAD", severity="high", facts={...}, proof=...)</span>
+
+<span class="c-com"># 2. rendu déterministe - affiché INSTANTANÉMENT</span>
+<span class="c-fn">render_templates</span>(signals)        <span class="c-com"># recos sûres, immédiates</span>
+
+<span class="c-com"># 3. analyse LLM en parallèle - swap-in quand prête</span>
+reco = <span class="c-fn">claude_p</span>(signals, model=<span class="c-key">FAST</span>, schema=<span class="c-key">RECO_JSON</span>)
+<span class="c-fn">assert_grounded</span>(reco, signals)     <span class="c-com"># chiffres et IDs vérifiés</span>
+<span class="c-fn">swap_in</span>(reco) <span class="c-key">if</span> reco.valid <span class="c-key">else</span> <span class="c-fn">keep</span>(templates)</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONÇU POUR NE JAMAIS TOMBER -->
+  <section class="section">
+    <div class="wrap split">
+      <div class="reveal">
+        <span class="eyebrow">Robustesse</span>
+        <h2>Conçu pour ne jamais tomber</h2>
+        <p class="lead">
+          Brancher un LLM sur un dashboard client, c'est accepter qu'il puisse être lent, cher
+          ou faillible. L'architecture est pensée pour qu'aucune de ces trois éventualités ne
+          casse l'expérience. L'endpoint répond <strong>toujours</strong>.
+        </p>
+        <ul class="ticks" style="margin-top:18px">
+          <li>Les recommandations <strong>déterministes</strong> s'affichent d'abord, puis sont remplacées (<strong>swap-in</strong>) par l'analyse LLM dès qu'elle est prête.</li>
+          <li><strong>Déduplication</strong> : plusieurs sous-onglets qui partagent le même contexte se résolvent en un <strong>seul appel LLM</strong>.</li>
+          <li><strong>Timeout client</strong> avec repli déterministe : passé le délai, le contenu sûr reste affiché.</li>
+          <li>Repli <strong>systématique</strong> vers le déterministe en cas d'erreur LLM - jamais d'écran vide.</li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="callout">
+          <span class="callout__icon">◉</span>
+          <div>
+            <h4>Cache par empreinte</h4>
+            <p>Chaque analyse LLM est mise en cache sous une empreinte qui combine <strong>compte + période + signaux + modèle</strong>. Deux runs identiques ne paient jamais deux fois : un cooldown anti-surcoût qui maîtrise la facture API.</p>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:18px">
+          <span class="callout__icon">❖</span>
+          <div>
+            <h4>Le déterministe est le filet, pas le brouillon</h4>
+            <p>Le rendu par templates n'est pas un placeholder en attendant mieux : c'est une réponse complète et valable en soi. Le LLM l'<strong>enrichit</strong> quand il le peut, mais son absence ne dégrade jamais le livrable en deçà du seuil utile.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LES 7 SECTIONS -->
+  <section class="section" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="reveal" style="max-width:62ch">
+        <span class="eyebrow">Périmètre</span>
+        <h2>Sept sections câblées en données live</h2>
+        <p class="lead">Chaque section a son module de signaux, son GAQL prouvé et son rendu propre. Toutes tirent la donnée directement de l'API, en lecture seule, en devise du compte.</p>
+      </div>
+      <div class="table-wrap reveal" style="margin-top:36px">
+        <table>
+          <thead>
+            <tr>
+              <th>Section</th>
+              <th>Ce que le module évalue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Overview</strong></td>
+              <td>Photographie du compte : volumes, tendance, dérive entre périodes comparables.</td>
+            </tr>
+            <tr>
+              <td><strong>Tracking</strong></td>
+              <td>Fiabilité de la donnée de conversion : actions, statut, doublons, cohérence des sources.</td>
+            </tr>
+            <tr>
+              <td><strong>Réglages</strong></td>
+              <td>Paramètres de campagne : réseaux, ciblage géographique, options à risque.</td>
+            </tr>
+            <tr>
+              <td><strong>Mots-clés</strong></td>
+              <td>Performance et hygiène : types de correspondance, cannibalisation, Quality Score.</td>
+            </tr>
+            <tr>
+              <td><strong>Termes de recherche</strong></td>
+              <td>Dépense gaspillée, requêtes hors intention, candidats négatifs prioritaires.</td>
+            </tr>
+            <tr>
+              <td><strong>Annonces</strong></td>
+              <td>Couverture RSA, force des assets, déséquilibres de diffusion.</td>
+            </tr>
+            <tr>
+              <td><strong>Audiences</strong></td>
+              <td>Listes appliquées, observation vs ciblage, signaux d'audience exploités.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="reveal" style="margin-top:24px;max-width:60ch">
+        <p>Il n'y a <strong>pas d'onglet Budget</strong>. C'est un choix assumé : l'allocation budgétaire relève d'un arbitrage stratégique humain, pas d'un signal automatisable de façon fiable section par section.</p>
+        <div class="card__tags" style="margin-top:14px">
+          <span class="tag">Overview</span>
+          <span class="tag">Tracking</span>
+          <span class="tag">Réglages</span>
+          <span class="tag">Mots-clés</span>
+          <span class="tag">Termes de recherche</span>
+          <span class="tag">Annonces</span>
+          <span class="tag">Audiences</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUT HONNETE -->
+  <section class="section">
+    <div class="wrap">
+      <div class="reveal" style="max-width:62ch">
+        <span class="eyebrow">Statut, sans enjoliver</span>
+        <h2>En production interne, pas un SaaS durci</h2>
+      </div>
+      <div class="grid grid--2 reveal" style="margin-top:36px">
+        <div class="card">
+          <span class="badge badge--prod" style="margin-bottom:14px">Ce qui tourne</span>
+          <ul class="ticks">
+            <li>Connexion <strong>multi-MCC</strong> avec découverte automatique des comptes.</li>
+            <li>Plusieurs <strong>dizaines de runs LLM</strong> déjà persistés.</li>
+            <li><strong>Suivi multi-utilisateur</strong> et quota API opérationnels.</li>
+            <li>Les sept sections câblées, du signal au rendu, <strong>de bout en bout</strong>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="badge badge--proto" style="margin-bottom:14px">La réserve honnête</span>
+          <ul class="ticks">
+            <li>C'est un <strong>outil interne</strong> : authentification simple, pas de durcissement SaaS.</li>
+            <li>Je parle donc de <strong>« production interne »</strong>, pas de produit public.</li>
+            <li>Le passage à un usage externe demanderait une <strong>couche sécurité</strong> dédiée.</li>
+            <li>Le périmètre fonctionnel, lui, est <strong>réel et utilisé</strong> au quotidien.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'ANGLE DE FOND -->
+  <section class="section" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap split">
+      <div class="reveal">
+        <span class="eyebrow">L'angle de fond</span>
+        <h2>Industrialiser l'audit, sans rogner sur la fiabilité</h2>
+        <p class="lead">
+          L'objet de <strong>sea-platform</strong> n'est pas d'automatiser un consultant : c'est de
+          niveler par le haut. Un consultant junior obtient, par compte, une analyse de niveau senior -
+          parce que la rigueur factuelle est portée par le code et que la rédaction experte est cadrée
+          par le grounding.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="callout">
+          <span class="callout__icon">⌘</span>
+          <div>
+            <h4>Trois garde-fous, un seul objectif</h4>
+            <p>Le <strong>grounding</strong> empêche les hallucinations, le <strong>repli déterministe</strong> garantit la disponibilité, le <strong>cooldown par empreinte</strong> maîtrise le coût. Ensemble, ils rendent la délégation à un LLM acceptable sur un livrable client.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CE QUE CA CHANGE -->
+  <section class="dark section">
+    <div class="wrap split split--wide">
+      <div class="reveal">
+        <span class="eyebrow">Ce que ça change</span>
+        <p class="quote">D'un audit <span class="grad">artisanal</span> à une analyse <span class="grad">industrialisée</span>, sans hallucination.</p>
+      </div>
+      <div class="reveal">
+        <p class="lead">
+          Le gain n'est pas seulement la vitesse. C'est la reproductibilité : deux audits du même
+          compte donnent la même analyse, parce que les faits viennent du même GAQL prouvé. Et c'est
+          le nivellement : un junior livre une analyse de niveau senior, encadrée par des garde-fous
+          qui empêchent autant les erreurs de chiffres que les dérapages de facture.
+        </p>
+        <p class="lead">
+          Le consultant ne part plus d'une page blanche. Il reçoit une lecture structurée, sourcée,
+          priorisée - et présentable telle quelle au client.
+        </p>
+        <div class="btn-row" style="margin-top:26px">
+          <a class="btn btn--light" href="audit-engine.html">Le moteur d'audit derrière <span class="arrow">→</span></a>
+          <a class="btn btn--light" href="mcp-servers.html">Les serveurs MCP <span class="arrow">→</span></a>
+          <a class="btn btn--light" href="index.html#production">Tous les systèmes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="index.html" style="color:var(--d-ink);margin-bottom:16px">
+            <span class="brand__mark">A</span>
+            <span>Aleksa<small style="color:var(--d-muted)">Marketing Engineer</small></span>
+          </a>
+          <p>Team Leader Paid Media &amp; Expert Tracking. Je construis les systèmes IA qui font scaler une agence paid sans sacrifier la fiabilité de la donnée.</p>
+        </div>
+        <div>
+          <h4>Systèmes</h4>
+          <a href="reporting-loop.html">Reporting Loop</a>
+          <a href="sea-platform.html">sea-platform</a>
+          <a href="audit-engine.html">Moteur d'audit</a>
+          <a href="mcp-servers.html">Serveurs MCP</a>
+          <a href="comms-assistant.html">Assistant communication</a>
+        </div>
+        <div>
+          <h4>Aller plus loin</h4>
+          <a href="vision-rd.html">Vision &amp; R&amp;D</a>
+          <a href="index.html#approche">Approche &amp; garde-fous</a>
+          <a href="index.html#stack">Stack technique</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Aleksa - Marketing Engineer</span>
+        <span>Données clients anonymisées · Portfolio professionnel</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

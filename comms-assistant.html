@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assistant communication - Aleksa | Marketing Engineer</title>
+  <meta name="description" content="Une couche d'assistance qui absorbe le travail de communication répétitif : tri des mails, brouillons contextualisés, comptes-rendus de réunion ventilés par responsable. L'IA prépare, l'humain valide." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark">A</span>
+        <span>Aleksa<small>Marketing Engineer</small></span>
+      </a>
+      <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <nav class="nav__links">
+        <a href="index.html#production">Systèmes</a>
+        <a href="index.html#vision">Vision &amp; R&amp;D</a>
+        <a href="index.html#approche">Approche</a>
+        <a href="index.html#stack">Stack</a>
+        <a class="nav__cta" href="index.html#contact">Échanger</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section class="phead">
+    <div class="wrap">
+      <a class="back" href="index.html#production">← Tous les systèmes</a>
+      <span class="badge badge--prod">En production partielle</span>
+      <h1 style="margin-top:18px">Assistant communication</h1>
+      <p class="lead">Une couche d'assistance qui absorbe le travail de communication répétitif : tri des mails, rédaction de brouillons contextualisés, comptes-rendus de réunion ventilés par responsable. L'IA prépare, l'humain valide. Garde-fou structurant : <strong>brouillons uniquement, jamais d'envoi automatique vers un tiers</strong>.</p>
+      <div class="phead__meta">
+        <span class="pill"><span class="dot"></span> Triage à deux étages</span>
+        <span class="pill"><span class="dot"></span> Brouillons prêts à valider</span>
+        <span class="pill"><span class="dot"></span> Comptes-rendus par responsable</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE PROBLEME -->
+  <section class="section">
+    <div class="wrap split split--wide">
+      <div class="reveal">
+        <span class="eyebrow">Le problème</span>
+        <h2>La communication grignote un temps diffus mais réel</h2>
+        <p class="lead">
+          Le tri des mails, la rédaction des réponses et les comptes-rendus de réunion mangent un temps
+          quotidien diffus mais réel, surtout quand on multiplie les comptes et les interlocuteurs.
+        </p>
+      </div>
+      <div class="reveal">
+        <ul class="ticks">
+          <li>La <strong>boîte de réception</strong> mélange notifications, newsletters et vraies demandes d'action.</li>
+          <li>Chaque réponse exige de <strong>recharger le contexte</strong> du compte et de l'interlocuteur.</li>
+          <li>Le <strong>compte-rendu de réunion</strong> est repoussé, puis bâclé faute de temps.</li>
+          <li>Plus on a d'interlocuteurs, <strong>moins ce travail scale</strong> - il devient un bruit de fond permanent.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE TRIAGE A DEUX ETAGES (dark) -->
+  <section class="dark section">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <span class="eyebrow">Le triage des mails</span>
+        <h2>À deux étages : mécanique en continu, intelligent à la demande</h2>
+        <p class="lead">Le tri ne repose pas sur un seul moteur. Un étage mécanique tourne en permanence et sans coût ; un étage intelligent, plus coûteux, n'est invoqué que sur instruction. Chacun fait ce pour quoi il est bon.</p>
+      </div>
+
+      <div class="thread reveal" style="margin-top:44px;grid-template-columns:repeat(2,1fr)">
+        <div class="thread__step">
+          <div class="thread__num">◉ Étage mécanique · 24/7, autonome</div>
+          <h3>Classer par règles de priorité</h3>
+          <p>Un script Apps Script classe chaque mail non lu par règles : <strong>notification → marquée lue</strong> ; <strong>newsletter → importante</strong> ; <strong>en copie → importante</strong> ; <strong>destinataire direct → action requise</strong>. Tourne en continu, sans IA, gratuitement.</p>
+        </div>
+        <div class="thread__step">
+          <div class="thread__num">❖ Étage intelligent · à la demande</div>
+          <h3>Lire, synthétiser, rédiger les brouillons</h3>
+          <p>Sur instruction, l'IA lit les mails prioritaires (<strong>100% en local via la CLI Google Workspace</strong>), produit une synthèse en tableau et, pour chaque mail à traiter, un <strong>brouillon de réponse prêt à valider</strong> - ton et contexte technique compris, format mail natif. En parallèle, un sous-process scanne les newsletters de veille tracking pour alimenter une base de connaissances.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE COMPTE-RENDU ACTIONNABLE -->
+  <section class="section">
+    <div class="wrap">
+      <div class="reveal" style="max-width:62ch">
+        <span class="eyebrow">Le compte-rendu de réunion</span>
+        <h2>Un récit actionnable, ventilé par responsable</h2>
+        <p class="lead">À partir du recap d'une réunion capté dans un document, l'IA ne résume pas : elle structure un livrable prêt à valider, où chaque action est rattachée à celui qui doit l'exécuter.</p>
+      </div>
+      <div class="steps reveal" style="margin-top:36px">
+        <div class="step">
+          <div class="step__n"></div>
+          <div>
+            <h3>Extraire la matière</h3>
+            <p>À partir du recap capté dans un document, l'IA extrait automatiquement les <strong>participants</strong>, les <strong>sujets</strong>, les <strong>décisions</strong> et surtout le <strong>qui-fait-quoi</strong> - chaque action rattachée à son responsable.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__n"></div>
+          <div>
+            <h3>Adapter le ton</h3>
+            <p>Le registre est calé sur le destinataire : <strong>client formel</strong>, <strong>semi-formel</strong> ou <strong>interne</strong>. Le même contenu ne se transmet pas de la même façon selon l'audience.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__n"></div>
+          <div>
+            <h3>Structurer le brouillon</h3>
+            <p>Production d'un brouillon structuré : <strong>points abordés</strong> puis <strong>prochaines étapes groupées par responsable</strong>. Détail qui fait la différence : une action <strong>déjà réalisée</strong> au moment de la rédaction est basculée dans le corps (faite) et retirée des prochaines étapes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LES GARDE-FOUS -->
+  <section class="section" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="reveal" style="max-width:62ch">
+        <span class="eyebrow">Les garde-fous</span>
+        <h2>Ce qui rend la délégation acceptable</h2>
+      </div>
+      <div class="grid grid--2 reveal" style="margin-top:36px">
+        <div class="callout">
+          <span class="callout__icon">⛨</span>
+          <div>
+            <h4>Brouillons uniquement</h4>
+            <p><strong>Jamais d'envoi direct vers un tiers.</strong> Seule exception : l'auto-notification vers sa propre adresse. Tout ce qui part vers un interlocuteur passe par une validation humaine.</p>
+          </div>
+        </div>
+        <div class="callout">
+          <span class="callout__icon">❖</span>
+          <div>
+            <h4>Pas de données internes sensibles</h4>
+            <p>Ne jamais inclure de <strong>marges, de stratégie</strong> ou d'éléments confidentiels dans un brouillon destiné à un tiers.</p>
+          </div>
+        </div>
+        <div class="callout">
+          <span class="callout__icon">◉</span>
+          <div>
+            <h4>Rien hors du contenu source</h4>
+            <p>Ne <strong>rien inventer</strong> au-delà du recap ou du mail fourni. Le brouillon reflète la matière réelle, pas une extrapolation plausible.</p>
+          </div>
+        </div>
+        <div class="callout">
+          <span class="callout__icon">▷</span>
+          <div>
+            <h4>Demander en cas d'ambiguïté</h4>
+            <p>Face à une <strong>information manquante ou équivoque</strong>, l'IA pose la question plutôt que de combler le vide par une hypothèse.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUT HONNETE -->
+  <section class="section">
+    <div class="wrap">
+      <div class="reveal" style="max-width:62ch">
+        <span class="eyebrow">Statut, sans enjoliver</span>
+        <h2>En production partielle, pas en boucle autonome</h2>
+      </div>
+      <div class="grid grid--2 reveal" style="margin-top:36px">
+        <div class="card">
+          <span class="badge badge--prod" style="margin-bottom:14px">Ce qui tourne</span>
+          <ul class="ticks">
+            <li>Le <strong>triage mécanique</strong> est en production 24/7.</li>
+            <li>Le <strong>triage intelligent</strong> fonctionne à la demande.</li>
+            <li>Les <strong>brouillons de réponse</strong> sont opérationnels.</li>
+            <li>Le <strong>compte-rendu ventilé par responsable</strong> est produit de bout en bout.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="badge badge--proto" style="margin-bottom:14px">Ce qui reste</span>
+          <ul class="ticks">
+            <li>Ce n'est <strong>pas une boucle autonome</strong>.</li>
+            <li>La partie intelligente est <strong>invoquée par l'humain</strong>, pas planifiée.</li>
+            <li>L'IA ne <strong>rédige pas seule en continu</strong>.</li>
+            <li>Le déclenchement reste un <strong>geste humain</strong>, pas un cron.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE MAILLON VERS LA SUITE (dark) -->
+  <section class="dark section">
+    <div class="wrap split split--wide">
+      <div class="reveal">
+        <span class="eyebrow">Le maillon vers la suite</span>
+        <p class="quote">La <span class="grad">moitié aval</span> est déjà là. Il manque la <span class="grad">captation amont</span>.</p>
+      </div>
+      <div class="reveal">
+        <p class="lead">
+          Le compte-rendu de réunion couvre déjà toute la moitié <strong>aval</strong> d'une vision plus large :
+          une IA qui écoute un call et produit le CR prêt à envoyer. La ventilation par responsable, l'adaptation
+          du ton, le tri des actions faites et à faire - tout cela est opérationnel.
+        </p>
+        <p class="lead">
+          Il manque seulement la <strong>captation et la transcription amont</strong>. C'est l'objet du chantier
+          dédié, où la chaîne se referme du call brut au brouillon transmissible.
+        </p>
+        <div class="btn-row" style="margin-top:26px">
+          <a class="btn btn--light" href="vision-rd.html#call">La captation de call <span class="arrow">→</span></a>
+          <a class="btn btn--light" href="reporting-loop.html">Reporting Loop</a>
+          <a class="btn btn--light" href="index.html#production">Tous les systèmes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="index.html" style="color:var(--d-ink);margin-bottom:16px">
+            <span class="brand__mark">A</span>
+            <span>Aleksa<small style="color:var(--d-muted)">Marketing Engineer</small></span>
+          </a>
+          <p>Team Leader Paid Media &amp; Expert Tracking. Je construis les systèmes IA qui font scaler une agence paid sans sacrifier la fiabilité de la donnée.</p>
+        </div>
+        <div>
+          <h4>Systèmes</h4>
+          <a href="reporting-loop.html">Reporting Loop</a>
+          <a href="sea-platform.html">sea-platform</a>
+          <a href="audit-engine.html">Moteur d'audit</a>
+          <a href="mcp-servers.html">Serveurs MCP</a>
+          <a href="comms-assistant.html">Assistant communication</a>
+        </div>
+        <div>
+          <h4>Aller plus loin</h4>
+          <a href="vision-rd.html">Vision &amp; R&amp;D</a>
+          <a href="index.html#approche">Approche &amp; garde-fous</a>
+          <a href="index.html#stack">Stack technique</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Aleksa - Marketing Engineer</span>
+        <span>Données clients anonymisées · Portfolio professionnel</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

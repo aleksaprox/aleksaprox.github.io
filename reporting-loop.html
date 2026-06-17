@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reporting Loop - Aleksa | Marketing Engineer</title>
+  <meta name="description" content="Une boucle fermée qui produit le reporting mensuel d'un compte Google Ads et le fait relire par un second agent, avant validation humaine." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark">A</span>
+        <span>Aleksa<small>Marketing Engineer</small></span>
+      </a>
+      <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <nav class="nav__links">
+        <a href="index.html#production">Systèmes</a>
+        <a href="index.html#vision">Vision &amp; R&amp;D</a>
+        <a href="index.html#approche">Approche</a>
+        <a href="index.html#stack">Stack</a>
+        <a class="nav__cta" href="index.html#contact">Échanger</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section class="phead">
+    <div class="wrap">
+      <a class="back" href="index.html#production">← Tous les systèmes</a>
+      <span class="badge badge--proto">Prototype éprouvé - pas encore planifié</span>
+      <h1 style="margin-top:18px">Reporting Loop</h1>
+      <p class="lead">Une boucle fermée qui produit le reporting mensuel d'un compte Google Ads sans qu'un consultant ait à le rédiger - et qui fait contrôler son propre brouillon par un second agent avant toute validation humaine.</p>
+      <div class="phead__meta">
+        <span class="pill"><span class="dot"></span> Closed-loop : Discover → Stop</span>
+        <span class="pill"><span class="dot"></span> Contrôle maker ≠ checker</span>
+        <span class="pill"><span class="dot"></span> Donnée tirée de l'API, en devise du compte</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE PROBLEME -->
+  <section class="section">
+    <div class="wrap split split--wide">
+      <div class="reveal">
+        <span class="eyebrow">Le problème</span>
+        <h2>Le reporting : chronophage, répétitif, peu valorisant</h2>
+        <p class="lead">
+          Le reporting mensuel est la tâche que tout consultant paid repousse : extraire la donnée,
+          la mettre en forme, retrouver le contexte du mois précédent, rédiger un récit lisible pour le client.
+          Plusieurs heures par compte, multipliées par un portefeuille entier, pour un travail à faible
+          valeur ajoutée intellectuelle.
+        </p>
+      </div>
+      <div class="reveal">
+        <ul class="ticks">
+          <li>Le <strong>contexte se perd</strong> d'un mois sur l'autre - chaque reporting repart presque de zéro.</li>
+          <li>La <strong>mise en forme</strong> mange le temps qui devrait aller à l'analyse et à l'arbitrage.</li>
+          <li>Le risque d'<strong>erreur de chiffre</strong> ou de récit bâclé augmente avec le volume.</li>
+          <li>Plus on a de comptes, <strong>moins le reporting scale</strong> - il devient un goulot.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE FONCTIONNEMENT (dark) -->
+  <section class="dark section">
+    <div class="wrap">
+      <div class="reveal" style="max-width:60ch">
+        <span class="eyebrow">Le fonctionnement</span>
+        <h2>Une boucle fermée en cinq temps</h2>
+        <p class="lead">Le cycle est codifié. L'IA tire la donnée directement de l'API Google Ads, identifie l'angle d'analyse, rédige, puis se fait relire - et s'arrête sur un brouillon soumis à l'humain. Aucune transmission automatique.</p>
+      </div>
+
+      <div class="thread reveal" style="margin-top:44px">
+        <div class="thread__step">
+          <div class="thread__num">01 · Discover</div>
+          <h3>Collecter</h3>
+          <p>Extraction GAQL en lecture seule, dates explicites, en devise du compte. Deux périodes comparables pour mesurer la dérive.</p>
+        </div>
+        <div class="thread__step">
+          <div class="thread__num">02 · Plan</div>
+          <h3>Cadrer l'angle</h3>
+          <p>Identification du fil narratif du mois : allocation budgétaire, dérive de performance, anomalie à expliquer.</p>
+        </div>
+        <div class="thread__step">
+          <div class="thread__num">03 · Execute</div>
+          <h3>Rédiger</h3>
+          <p>Production du reporting client : récit décisionnel court, chiffres sourcés, détail renvoyé au Looker Studio.</p>
+        </div>
+      </div>
+      <div class="thread reveal" style="margin-top:18px;grid-template-columns:repeat(2,1fr)">
+        <div class="thread__step">
+          <div class="thread__num">04 · Verify</div>
+          <h3>Faire relire - maker ≠ checker</h3>
+          <p>Un <strong>second agent distinct</strong> audite le brouillon : erreurs de chiffres, sur-interprétations, caveats manquants. Le rédacteur n'est jamais son propre correcteur.</p>
+        </div>
+        <div class="thread__step">
+          <div class="thread__num">05 · Stop</div>
+          <h3>S'arrêter sur validation</h3>
+          <p>La boucle se termine sur un brouillon prêt, soumis à l'humain. <strong>Rien n'est envoyé automatiquement</strong> : le consultant valide, ajuste, transmet.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIFICITE METIER -->
+  <section class="section">
+    <div class="wrap split">
+      <div class="reveal">
+        <span class="eyebrow">La spécificité métier</span>
+        <h2>Une vraie valeur des leads, pas un proxy uniforme</h2>
+        <p class="lead">
+          Sur les comptes lead gen, la boucle applique une couche de valeur métier réelle par gamme de
+          produit, au lieu de la valeur proxy uniforme native qui écrase la hiérarchie de valeur.
+        </p>
+        <p>
+          Concrètement : tous les leads ne se valent pas. Un devis sur une gamme premium ne pèse pas le
+          même poids qu'une demande d'entrée de gamme. La boucle intègre cette hiérarchie pour que le
+          récit de performance reflète la réalité business, et pas une moyenne trompeuse.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="callout">
+          <span class="callout__icon">⛨</span>
+          <div>
+            <h4>Le garde-fou central : maker ≠ checker</h4>
+            <p>La séparation du rédacteur et du correcteur est ce qui rend la délégation acceptable. Un modèle qui se relit lui-même valide ses propres erreurs ; deux agents distincts cassent ce biais. C'est le principe qui transforme une rédaction automatique « plausible » en livrable contrôlable.</p>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:18px">
+          <span class="callout__icon">❖</span>
+          <div>
+            <h4>Contrat de données stable</h4>
+            <p>D'un mois sur l'autre, la donnée est tirée selon le même contrat (mêmes champs, mêmes règles, même devise). Deux runs sont donc réellement comparables - condition sine qua non d'un récit de dérive honnête.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUT HONNETE -->
+  <section class="section" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="reveal" style="max-width:62ch">
+        <span class="eyebrow">Statut, sans enjoliver</span>
+        <h2>Éprouvé manuellement, pas encore en pilote automatique</h2>
+      </div>
+      <div class="grid grid--2 reveal" style="margin-top:36px">
+        <div class="card">
+          <span class="badge badge--prod" style="margin-bottom:14px">Ce qui est fait</span>
+          <ul class="ticks">
+            <li>Le cycle est <strong>codifié</strong> et documenté de bout en bout.</li>
+            <li>Les requêtes de données sont <strong>validées sur un compte réel</strong>.</li>
+            <li>Des reportings réels ont déjà été <strong>produits via ce cadre</strong>.</li>
+            <li>Le contrôle croisé maker ≠ checker est <strong>opérationnel</strong>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="badge badge--proto" style="margin-bottom:14px">Ce qui reste</span>
+          <ul class="ticks">
+            <li>Le <strong>déclenchement planifié</strong> (cron mensuel) n'est pas encore branché.</li>
+            <li>Aujourd'hui, la boucle est <strong>lancée à la main</strong>.</li>
+            <li>Cible : un run programmé en <strong>début de mois</strong>, fenêtre de conversion figée.</li>
+            <li>C'est l'objet du chantier <a href="vision-rd.html#autopilot" style="color:var(--accent)">Reporting autonome</a>.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CE QUE CA CHANGE -->
+  <section class="dark section">
+    <div class="wrap split split--wide">
+      <div class="reveal">
+        <span class="eyebrow">Ce que ça change</span>
+        <p class="quote">De <span class="grad">rédacteur</span> de reporting à <span class="grad">valideur</span> d'un brouillon déjà relu.</p>
+      </div>
+      <div class="reveal">
+        <p class="lead">
+          Le gain n'est pas qu'un temps grappillé : c'est un changement de nature du travail. Le consultant
+          n'ouvre plus un document vide. Il reçoit un récit déjà rédigé, déjà contrôlé, chiffres sourcés, et
+          consacre son temps à ce qu'aucune IA ne fait à sa place - décider, arbitrer, conseiller le client.
+        </p>
+        <p class="lead">
+          Et parce que la machine porte le contexte, la qualité ne dépend plus de la mémoire qu'on a du
+          compte un mois plus tôt. Elle est <strong>scalable à N comptes</strong>, avec un garde-fou
+          anti-hallucination intégré.
+        </p>
+        <div class="btn-row" style="margin-top:26px">
+          <a class="btn btn--light" href="audit-engine.html">Le moteur d'analyse derrière <span class="arrow">→</span></a>
+          <a class="btn btn--light" href="index.html#production">Tous les systèmes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="index.html" style="color:var(--d-ink);margin-bottom:16px">
+            <span class="brand__mark">A</span>
+            <span>Aleksa<small style="color:var(--d-muted)">Marketing Engineer</small></span>
+          </a>
+          <p>Team Leader Paid Media &amp; Expert Tracking. Je construis les systèmes IA qui font scaler une agence paid sans sacrifier la fiabilité de la donnée.</p>
+        </div>
+        <div>
+          <h4>Systèmes</h4>
+          <a href="reporting-loop.html">Reporting Loop</a>
+          <a href="sea-platform.html">sea-platform</a>
+          <a href="audit-engine.html">Moteur d'audit</a>
+          <a href="mcp-servers.html">Serveurs MCP</a>
+          <a href="comms-assistant.html">Assistant communication</a>
+        </div>
+        <div>
+          <h4>Aller plus loin</h4>
+          <a href="vision-rd.html">Vision &amp; R&amp;D</a>
+          <a href="index.html#approche">Approche &amp; garde-fous</a>
+          <a href="index.html#stack">Stack technique</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Aleksa - Marketing Engineer</span>
+        <span>Données clients anonymisées · Portfolio professionnel</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

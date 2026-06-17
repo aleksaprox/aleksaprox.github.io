@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serveurs MCP maison - Aleksa | Marketing Engineer</title>
+  <meta name="description" content="Deux serveurs MCP développés en Python qui donnent à l'IA un accès direct à Google Ads et à Google Tag Manager, sans connecteur tiers ni export manuel." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark">A</span>
+        <span>Aleksa<small>Marketing Engineer</small></span>
+      </a>
+      <button class="nav__toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      <nav class="nav__links">
+        <a href="index.html#production">Systèmes</a>
+        <a href="index.html#vision">Vision &amp; R&amp;D</a>
+        <a href="index.html#approche">Approche</a>
+        <a href="index.html#stack">Stack</a>
+        <a class="nav__cta" href="index.html#contact">Échanger</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section class="phead">
+    <div class="wrap">
+      <a class="back" href="index.html#production">← Tous les systèmes</a>
+      <span class="badge badge--prod">Développement maison - en production</span>
+      <h1 style="margin-top:18px">Serveurs MCP maison</h1>
+      <p class="lead">Deux serveurs développés en <strong>Python</strong> qui donnent à l'IA un accès direct à <strong>Google Ads</strong> et à <strong>Google Tag Manager</strong>. L'agence formule un besoin en langage naturel ; le serveur le traduit en appels d'API. Pas de connecteur tiers, pas d'export manuel.</p>
+      <div class="phead__meta">
+        <span class="pill"><span class="dot"></span> Protocole : Model Context Protocol</span>
+        <span class="pill"><span class="dot"></span> Google Ads : 18 outils</span>
+        <span class="pill"><span class="dot"></span> run_gaql en lecture seule</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE PROBLEME -->
+  <section class="section">
+    <div class="wrap split split--wide">
+      <div class="reveal">
+        <span class="eyebrow">Le problème</span>
+        <h2>La donnée vit dans l'interface, l'analyse vit ailleurs</h2>
+        <p class="lead">
+          Interroger la donnée <strong>Google Ads</strong> ou configurer un conteneur <strong>GTM</strong> passe
+          normalement par l'interface graphique ou des exports CSV. Lent, manuel, non scriptable, et surtout
+          déconnecté du flux conversationnel où l'analyse se fait réellement.
+        </p>
+      </div>
+      <div class="reveal">
+        <ul class="ticks">
+          <li>L'<strong>interface graphique</strong> impose un parcours à la main, écran par écran.</li>
+          <li>Les <strong>exports CSV</strong> figent la donnée hors du contexte d'analyse.</li>
+          <li>Rien n'est <strong>scriptable</strong> : chaque requête se rejoue manuellement.</li>
+          <li>L'IA reste <strong>aveugle</strong> au compte tant qu'on ne lui colle pas la donnée à la main.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVEUR GOOGLE ADS -->
+  <section class="section" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="reveal" style="max-width:64ch">
+        <span class="eyebrow">Serveur n°1</span>
+        <h2 style="margin-bottom:14px">Serveur MCP Google Ads</h2>
+        <span class="badge badge--prod">En production</span>
+        <p class="lead" style="margin-top:18px">
+          <strong>18 outils</strong> exposés à l'IA. La pièce maîtresse est <strong>run_gaql</strong> : une requête
+          <strong>GAQL</strong> libre en lecture seule qui ouvre un accès analytique total au compte, avec un garde-fou strict.
+        </p>
+      </div>
+
+      <div class="split split--wide reveal" style="margin-top:40px">
+        <div>
+          <h3>La pièce maîtresse : run_gaql</h3>
+          <p>
+            <strong>run_gaql</strong> accepte une requête <strong>GAQL</strong> arbitraire en <strong>lecture seule</strong>.
+            Le garde-fou est dur : <strong>SELECT only</strong>, rejet de toute mutation. L'IA peut interroger n'importe
+            quelle ressource du compte sans jamais pouvoir modifier l'état par cette voie.
+          </p>
+          <p>
+            C'est ce qui en fait le <strong>socle du moteur d'audit</strong> et de ses ~45 modules : un accès analytique
+            total, borné par la lecture seule et par un quota maîtrisé (limite quotidienne de requêtes).
+          </p>
+          <div class="callout" style="margin-top:18px">
+            <span class="callout__icon">⛨</span>
+            <div>
+              <h4>Garde-fou d'écriture</h4>
+              <p>Toute tentative de mutation passée à <strong>run_gaql</strong> est rejetée. Les actions en écriture passent par des outils dédiés, explicites et nommés - jamais par la requête libre.</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="code" aria-hidden="true">
+            <div class="code__bar"><i></i><i></i><i></i><span>mcp · google-ads · run_gaql</span></div>
+<pre><span class="c-com"># Demande formulée en langage naturel par l'agence</span>
+<span class="c-com"># « CPA et conversions par campagne, 30 derniers jours »</span>
+
+<span class="c-fn">→ run_gaql</span> (<span class="c-key">read-only</span>)
+<span class="c-key">SELECT</span> campaign.name,
+       metrics.conversions,
+       metrics.cost_per_conversion
+<span class="c-key">FROM</span> campaign
+<span class="c-key">WHERE</span> segments.date <span class="c-key">DURING</span> <span class="c-str">LAST_30_DAYS</span>
+
+<span class="c-com"># Mutation refusée d'office</span>
+<span class="c-fn">✕ UPDATE / SET</span> → <span class="c-str">rejeté</span> (SELECT only)
+<span class="c-fn">→ retour</span>: métriques croisées, devise du compte</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="margin-top:44px">
+        <span class="eyebrow">Les 18 outils</span>
+        <h3>Quatre familles, un seul point d'entrée pour l'IA</h3>
+        <div class="table-wrap" style="margin-top:18px">
+          <table>
+            <thead>
+              <tr>
+                <th>Famille</th>
+                <th>Périmètre</th>
+                <th>Outils</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Requête libre</strong></td>
+                <td>Accès analytique total en lecture seule, garde-fou SELECT only</td>
+                <td><strong>run_gaql</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Rapports prêts</strong></td>
+                <td>Vues métier pré-cadrées, directement exploitables</td>
+                <td>Campagnes, groupes d'annonces, mots-clés, termes de recherche, performance d'annonces, jour/heure, appareil, zone géo, âge/genre, auction insights</td>
+              </tr>
+              <tr>
+                <td><strong>Données de compte</strong></td>
+                <td>Contexte structurel du compte</td>
+                <td>Infos compte, actions de conversion, listes d'audience</td>
+              </tr>
+              <tr>
+                <td><strong>Actions en écriture</strong></td>
+                <td>Outils explicites, hors requête libre</td>
+                <td>Ajout de négatifs, pause/activation de campagnes et de mots-clés, idées de mots-clés</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVEUR GTM (dark) -->
+  <section class="dark section">
+    <div class="wrap">
+      <div class="reveal" style="max-width:64ch">
+        <span class="eyebrow">Serveur n°2</span>
+        <h2 style="margin-bottom:14px">Serveur MCP Google Tag Manager</h2>
+        <span class="badge badge--proto">Prototype interne (beta)</span>
+        <p class="lead" style="margin-top:18px">
+          Un serveur qui donne à l'IA la main sur un conteneur <strong>GTM</strong> : de l'inventaire de bas niveau
+          jusqu'à des workflows qui assemblent un plan de marquage complet en une seule requête.
+        </p>
+      </div>
+
+      <div class="split split--wide reveal" style="margin-top:40px">
+        <div>
+          <h3>Ce qu'il sait faire</h3>
+          <ul class="ticks">
+            <li><strong>Lecture / inventaire</strong> : conteneurs, espaces de travail, balises, déclencheurs, variables.</li>
+            <li><strong>CRUD bas niveau</strong> sur chaque entité du conteneur.</li>
+            <li>Surtout des <strong>workflows haut niveau</strong> qui assemblent des plans de marquage complets en une requête : configuration <strong>GA4</strong>, <strong>Pixel Meta</strong>, e-commerce complet.</li>
+            <li><strong>Publication de versions</strong> du conteneur.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="callout">
+            <span class="callout__icon">◫</span>
+            <div>
+              <h4>Statut assumé : prototype interne</h4>
+              <p>Repris et étendu d'un projet open source. Usage ponctuel, en interne. Ce n'est pas un produit packagé : pas de support, pas de garantie de stabilité. Un accélérateur de configuration, pas une brique de production.</p>
+            </div>
+          </div>
+          <div class="callout" style="margin-top:18px">
+            <span class="callout__icon">▦</span>
+            <div>
+              <h4>Stack</h4>
+              <p><strong>Python</strong> (<strong>asyncio</strong>), <strong>FastMCP</strong>, <strong>Google Tag Manager API v2</strong>, <strong>OAuth</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANGLE IA -->
+  <section class="section">
+    <div class="wrap split">
+      <div class="reveal">
+        <span class="eyebrow">L'angle IA</span>
+        <h2>L'analyse, la décision et l'action dans la même conversation</h2>
+        <p class="lead">
+          L'IA consomme ces outils en langage naturel. La valeur n'est pas l'API en soi - elle existe déjà -
+          mais le fait que l'analyse, la décision et l'action vivent dans la même conversation.
+        </p>
+        <p>
+          On ne change plus d'outil entre constater, arbitrer et agir. Et parce que <strong>run_gaql</strong> alimente
+          directement tout le système d'audit, ce que l'IA voit du compte et ce sur quoi elle raisonne reposent sur
+          la même source, sans rupture.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="callout">
+          <span class="callout__icon">◉</span>
+          <div>
+            <h4>Le langage naturel comme interface</h4>
+            <p>L'agence formule un besoin en clair. Le serveur le traduit en <strong>GAQL</strong> ou en appel d'API, exécute, et restitue une donnée exploitable. Aucune syntaxe à écrire à la main côté utilisateur.</p>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:18px">
+          <span class="callout__icon">⌘</span>
+          <div>
+            <h4>run_gaql, colonne vertébrale</h4>
+            <p>Un seul outil de lecture libre nourrit le moteur d'audit et ses ~45 modules. Tout part de là : c'est le point d'entrée unique vers la donnée du compte.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUT -->
+  <section class="section" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="reveal" style="max-width:62ch">
+        <span class="eyebrow">Statut, sans enjoliver</span>
+        <h2>Un serveur en production, un prototype assumé</h2>
+      </div>
+      <div class="grid grid--2 reveal" style="margin-top:36px">
+        <div class="card">
+          <span class="badge badge--prod" style="margin-bottom:14px">Google Ads - en production</span>
+          <ul class="ticks">
+            <li><strong>Basic Access API</strong> Google Ads obtenu.</li>
+            <li>Les <strong>18 outils</strong> sont opérationnels, dont ceux en écriture.</li>
+            <li><strong>run_gaql</strong> sert de socle au moteur d'audit au quotidien.</li>
+            <li>Garde-fou de lecture seule et <strong>quota maîtrisé</strong> en place.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="badge badge--proto" style="margin-bottom:14px">GTM - prototype interne</span>
+          <ul class="ticks">
+            <li>Statut <strong>prototype (beta)</strong>, repris d'un projet open source.</li>
+            <li><strong>Usage ponctuel</strong>, en interne uniquement.</li>
+            <li>Workflows de plan de marquage <strong>fonctionnels</strong> mais non durcis.</li>
+            <li><strong>Pas un produit packagé</strong> : ni support, ni garantie de stabilité.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE SOCLE DE TOUT LE RESTE (dark) -->
+  <section class="dark section">
+    <div class="wrap split split--wide">
+      <div class="reveal">
+        <span class="eyebrow">Le socle de tout le reste</span>
+        <p class="quote">L'accès direct à la donnée est ce qui rend <span class="grad">tout le reste</span> possible.</p>
+      </div>
+      <div class="reveal">
+        <p class="lead">
+          Sans <strong>run_gaql</strong> et son accès analytique en lecture seule, il n'y a ni moteur d'audit, ni dashboard
+          live, ni reporting tiré de l'API. Ces serveurs ne sont pas un système de plus : ce sont les fondations
+          sur lesquelles reposent les autres.
+        </p>
+        <p class="lead">
+          C'est aussi pour cela que la frontière de maturité est tracée nettement : <strong>Google Ads</strong> en production,
+          <strong>GTM</strong> en prototype assumé. La fiabilité du socle prime sur le périmètre.
+        </p>
+        <div class="btn-row" style="margin-top:26px">
+          <a class="btn btn--light" href="audit-engine.html">Le moteur d'audit alimenté par run_gaql <span class="arrow">→</span></a>
+          <a class="btn btn--light" href="sea-platform.html">sea-platform <span class="arrow">→</span></a>
+          <a class="btn btn--light" href="index.html#production">Tous les systèmes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a class="brand" href="index.html" style="color:var(--d-ink);margin-bottom:16px">
+            <span class="brand__mark">A</span>
+            <span>Aleksa<small style="color:var(--d-muted)">Marketing Engineer</small></span>
+          </a>
+          <p>Team Leader Paid Media &amp; Expert Tracking. Je construis les systèmes IA qui font scaler une agence paid sans sacrifier la fiabilité de la donnée.</p>
+        </div>
+        <div>
+          <h4>Systèmes</h4>
+          <a href="reporting-loop.html">Reporting Loop</a>
+          <a href="sea-platform.html">sea-platform</a>
+          <a href="audit-engine.html">Moteur d'audit</a>
+          <a href="mcp-servers.html">Serveurs MCP</a>
+          <a href="comms-assistant.html">Assistant communication</a>
+        </div>
+        <div>
+          <h4>Aller plus loin</h4>
+          <a href="vision-rd.html">Vision &amp; R&amp;D</a>
+          <a href="index.html#approche">Approche &amp; garde-fous</a>
+          <a href="index.html#stack">Stack technique</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Aleksa - Marketing Engineer</span>
+        <span>Données clients anonymisées · Portfolio professionnel</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
