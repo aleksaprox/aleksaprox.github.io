@@ -199,6 +199,8 @@ a.card:hover { transform: translateY(-4px); box-shadow: var(--sh-lg); border-col
 .dark .lead, .dark p { color: var(--d-muted); }
 .dark .eyebrow { color: #8ea2ff; }
 .dark .muted { color: var(--d-muted); }
+.dark strong { color: var(--d-ink); }
+.dark .ticks li strong { color: var(--d-ink); }
 .dark .pill { background: var(--d-surface); border-color: var(--d-line); color: var(--d-ink); }
 .dark .card { background: var(--d-surface); border-color: var(--d-line); color: var(--d-ink); box-shadow: none; }
 .dark .card h3 { color: var(--d-ink); }
