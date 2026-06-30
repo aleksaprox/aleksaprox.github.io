@@ -23,6 +23,22 @@
     }
   });
 
+  // --- Formulaire contact : repli mailto tant que Formspree n'est pas configure ---
+  var form = document.querySelector(".contact-form");
+  if (form && /REMPLACER/.test(form.getAttribute("action") || "")) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var val = function (sel) { var el = form.querySelector(sel); return el ? el.value : ""; };
+      var body = encodeURIComponent(
+        "Nom : " + val('[name="name"]') +
+        "\nEmail : " + val('[name="email"]') +
+        "\n\n" + val('[name="message"]')
+      );
+      var subject = encodeURIComponent("Prise de contact - " + (val('[name="name"]') || "site"));
+      window.location.href = "mailto:aleksa96gajic@gmail.com?subject=" + subject + "&body=" + body;
+    });
+  }
+
   // --- Reveal au scroll ---
   var reveals = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window && reveals.length) {

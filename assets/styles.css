@@ -1,5 +1,5 @@
 /* =========================================================================
-   Portfolio - Aleksa | Marketing Engineer
+   Portfolio - Aleksa Gajic | Systemes IA, Paid & Tracking (freelance)
    Systeme de design hybride premium (clair dominant + sections sombres)
    Source de verite visuelle partagee par toutes les pages.
    ========================================================================= */
@@ -319,6 +319,42 @@ tbody td strong { color: var(--ink); }
 .footer__brand { max-width: 34ch; }
 .footer__bottom { border-top: 1px solid var(--d-line); padding-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 0.86rem; }
 
+/* ---------- Formulaire de contact ---------- */
+.contact-form { display: grid; gap: 16px; text-align: left; }
+.contact-form label { display: grid; gap: 6px; font-size: 0.88rem; font-weight: 580; color: var(--ink-2); }
+.contact-form input, .contact-form textarea {
+  font-family: var(--font); font-size: 1rem; color: var(--ink); width: 100%;
+  padding: 12px 14px; border: 1px solid var(--line-strong); border-radius: var(--r-sm);
+  background: var(--surface); resize: vertical;
+}
+.contact-form input:focus, .contact-form textarea:focus {
+  outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.contact-form button { justify-content: center; margin-top: 4px; }
+.form-note { font-size: 0.82rem; color: var(--muted); margin: 4px 0 0; }
+.contact-split { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 40px; align-items: start; text-align: left; }
+.contact-direct { display: grid; gap: 16px; }
+.contact-direct .pill { width: fit-content; }
+
+/* ---------- Etudes de cas ---------- */
+.case { display: flex; flex-direction: column; }
+.case .card__tags { margin-bottom: 14px; }
+.case__metric {
+  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line);
+  display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+}
+.case__metric .stat__k { font-size: 1.7rem; }
+.case__metric span:last-child { font-size: 0.9rem; color: var(--muted); }
+.dark .case__metric { border-color: var(--d-line); }
+.dark .case__metric span:last-child { color: var(--d-muted); }
+
+/* ---------- Carte mise en avant (offre principale) ---------- */
+.card--feature { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--sh); }
+.card__flag {
+  position: absolute; top: -11px; left: 22px; font-size: 0.7rem; font-weight: 650; letter-spacing: 0.04em;
+  text-transform: uppercase; color: #fff; background: var(--grad); padding: 4px 11px; border-radius: 999px;
+}
+
 /* ---------- Reveal anim ---------- */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .reveal.is-in { opacity: 1; transform: none; }
@@ -329,7 +365,7 @@ tbody td strong { color: var(--ink); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 920px) {
-  .hero__grid, .split, .split--wide { grid-template-columns: 1fr; gap: 36px; }
+  .hero__grid, .split, .split--wide, .contact-split { grid-template-columns: 1fr; gap: 36px; }
   .grid--3 { grid-template-columns: repeat(2, 1fr); }
   .thread { grid-template-columns: 1fr; }
   .thread__step { border-right: 0; border-bottom: 1px solid var(--d-line); }
